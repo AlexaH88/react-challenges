@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import css from './css/NavBarForm.module.css'
+import NavBarChild from './NavBarChild'
 
 export class NavBarForm extends Component {
 
@@ -8,16 +9,14 @@ export class NavBarForm extends Component {
         
         this.state = {
             isLoggedIn: true,
-            buttonText: "Login"
         }
     }
 
-    handleClick() {
+    handleClick = () => {
         this.setState((prevState) => {
             console.log("Previous State:", prevState)
             return {
-                isLoggedIn: prevState.isLoggedIn === true ? false : true,
-                buttonText: prevState.buttonText === "Login" ? "Submit" : "Login"
+                isLoggedIn: prevState.isLoggedIn ? false : true,
             }
         })
     }
@@ -26,21 +25,7 @@ export class NavBarForm extends Component {
         return (
         <div className={css.NavBar}>
             <h1>My Gallery</h1>
-            {
-            this.state.isLoggedIn 
-            ? 
-            (<button onClick={() => {this.handleClick()}}>{this.state.buttonText}</button>) 
-            : 
-            (
-            <form action="">
-                <label htmlFor="username">Username:</label>
-                <input type="text" id="username" name="username" />
-                <label htmlFor="password">Password:</label>
-                <input type="password" id="password" name="password" />
-                <button onClick={() => {this.handleClick()}}>{this.state.buttonText}</button>
-            </form>
-            )
-            }
+            <NavBarChild handleClick={this.handleClick} isLoggedIn={this.state.isLoggedIn}/>
         </div>
         )
     }
